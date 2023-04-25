@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "accident-detection-ui"
+version = "0.1.0"
+description = ""
+authors = ["jumashafara <jumashafara0@gmail.com>"]
+readme = "README.md"
+packages = [{include = "accident_detection_ui"}]
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+django = "^4.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
