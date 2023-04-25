@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "accident-detection-api"
+version = "0.1.0"
+description = ""
+authors = ["jumashafara"]
+readme = "README.md"
+packages = [{include = "accident_detection_api"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^4.2"
+opencv-python = "^4.7.0.72"
+pafy = "^0.5.5"
+tensorflow-hub = "^0.13.0"
+pillow = "^9.5.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
