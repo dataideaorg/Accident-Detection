@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView
@@ -21,6 +21,12 @@ def login_user(request):
         form = UserLoginForm()
 
     return render(request, 'accounts/login.html', {'form': form})
+
+def logout_user(request):
+    if request.method == 'POST':
+        logout(request)
+        return redirect('/')
+
 
 def register_user(request):
     if request.method == 'POST':

@@ -10,6 +10,9 @@ packages = [{include = "accident_detection_ui"}]
 python = ">=3.9"
 django = "^4.2"
 pillow = "^9.5.0"
+shafara-tool-kit = "0.1.1"
+opencv-python = "^4.7.0.72"
+requests = "^2.29.0"
 
 
 [build-system]
