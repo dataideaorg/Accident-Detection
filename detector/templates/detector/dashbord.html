@@ -1,5 +1,93 @@
 {% extends 'accidentdetection/base.html'%}
 {% load static %}
-{% block content%}
-<h1>Dashbord</h1>
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2 sidebar">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'detector:dashbord'%}">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'detector:process_video'%}">Select Video Feed</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">View Images</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Export Data</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-10 main">
+      <h2>Dashboard</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Images Processed</h4>
+              <p class="card-text">{{ num_images_processed }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Accidents Detected</h4>
+              <p class="card-text">{{ num_accidents_detected }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Prediction Accuracy</h4>
+              <p class="card-text">{{ prediction_accuracy }}%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Latest Predictions</h4>
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Image</th>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th>Location</th>
+                      <th>Prediction</th>
+                      <th>Severity</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for prediction in latest_predictions %}
+                    <tr>
+                      <td><img src="{{ prediction.image.url }}" width="50"></td>
+                      <td>{{ prediction.date }}</td>
+                      <td>{{ prediction.time }}</td>
+                      <td>{{ prediction.location }}</td>
+                      <td>{{ prediction.prediction }}</td>
+                      <td>{{ prediction.severity }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                      <td colspan="6">No predictions found.</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

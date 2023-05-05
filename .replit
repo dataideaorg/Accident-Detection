@@ -1,0 +1,4 @@
+run = "python manage.py runserver"
+
+[nix]
+channel = "stable-22_11"
