@@ -57,23 +57,21 @@
                 <table class="table table-striped">
                   <thead>
                     <tr>
-                      <th>Image</th>
                       <th>Date</th>
                       <th>Time</th>
                       <th>Location</th>
                       <th>Prediction</th>
-                      <th>Severity</th>
+                      <th>Confidence</th>
                     </tr>
                   </thead>
                   <tbody>
                     {% for prediction in latest_predictions %}
                     <tr>
-                      <td><img src="{{ prediction.image.url }}" width="50"></td>
                       <td>{{ prediction.date }}</td>
                       <td>{{ prediction.time }}</td>
                       <td>{{ prediction.location }}</td>
                       <td>{{ prediction.prediction }}</td>
-                      <td>{{ prediction.severity }}</td>
+                      <td>{{ prediction.confidence }}</td>
                     </tr>
                     {% empty %}
                     <tr>
