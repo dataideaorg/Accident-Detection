@@ -52,7 +52,7 @@ def get_prediction(video, url):
                 'JPEG'
                 )
 
-            yield prediction
+            yield response
 
 # import cv2
 # import pathlib
@@ -99,4 +99,4 @@ def get_prediction(video, url):
 #                 frame
 #                 )
             
-#             yield prediction   
+#             yield response
