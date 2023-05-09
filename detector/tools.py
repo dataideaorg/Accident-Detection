@@ -1,14 +1,19 @@
 import os
 import cv2
+import PIL
 import pathlib
 import datetime
 import requests
+import numpy as np
 from .models import Prediction
 from geopy.geocoders import Nominatim
 from shafaratoolkit.props import colored
 import accidentdetection.settings as settings
 
 BASE_DIR = pathlib.Path(__file__).resolve().parent.parent
+
+def is_writable_file(filename):
+    return os.access(filename, os.W_OK)
 
 def get_user_location(request):
     ip = request.META.get('REMOTE_ADDR')
@@ -20,15 +25,13 @@ def get_user_location(request):
         return None
 
 def request_prediction(image, url):
-    # if not image and url:
-    #     raise Exception('Both image and api url must be provided')
     headers = {}
-    payload = {}
-
-    files = [('image', open(f'{image}', 'rb'))]
+    files = {'image': (open(image, 'rb'))}
 
     try:
-        response = requests.post(url, headers, files, payload)
+        print(colored(0, 0, 255, "Sending request to API ..."))
+        response = requests.post(url, headers=headers, files=files)
+        print(response.status_code)
         return response.json()
     except Exception as e:
         print(colored(255, 0, 0, text=f'Error: {e}'))
@@ -61,25 +64,36 @@ def get_prediction(request, video, url):
         if i % frequency == 0:
             print(colored(0, 255, 0, text=f'Processing frame {i} of {frame_count}'))
             filename = os.path.join(settings.MEDIA_ROOT, 'frames', f'frame_{i}.jpg')
-            cv2.imwrite(filename, frame)
+            
+            print(colored(0, 0, 255, "Path is writable")) if is_writable_file(filename) else print(colored(0, 0, 255, "Path is not writable"))
+            print(colored(0, 255, 0, text=f'Saving frame {i} to {filename}'))
+            
+            # cv2.imwrite(filename, frame)
+            # Convert the frame to a PIL Image
+            frame = PIL.Image.fromarray(np.uint8(frame))
+            
+            # Save the image to disk
+            with open(filename, 'wb') as f:
+                frame.save(f, format='JPEG')
             print(colored(0, 255, 0, text=f'Saved frame {i} to {filename}'))
 
             response = request_prediction(filename, url)
             date_time = datetime.now()
+            prediction = response['prediction'],
+            confidence = response['confidence'],
+            location = location,
+            time = date_time.time().strftime("%H:%M:%S"),
+            date = date_time.date().strftime("%Y-%m-%d"),
+            image = os.path.join(settings.MEDIA_ROOT, 'frames', f'frame_{i}_Pred_{prediction}_Conf_{confidence}.jpg')
             prediction_object = Prediction(
-                prediction = response['prediction'],
-                confidence = response['confidence'],
-                location = location,
-                time = date_time.time().strftime("%H:%M:%S"),
-                date = date_time.date().strftime("%Y-%m-%d"),
+                image=image,
+                prediction=prediction,
+                confidence=confidence,
+                date=date,
+                time=time,  
+                location=location
                 )
 
-            cv2.imwrite(
-                # BASE_DIR / f'media/images/predictions/frame_{i}_Pred_{prediction}_Conf_{confidence}.jpg', 
-                os.path.join(settings.MEDIA_ROOT, 'frames', f'iframe_{i}_Pred_{prediction}_Conf_{confidence}.jpg'),
-                frame
-                )
-            
             prediction_object.save()
             prediction_objects.append(prediction_object)
     return prediction_objects

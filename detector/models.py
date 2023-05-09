@@ -1,7 +1,8 @@
 from django.db import models
 
 class Prediction(models.Model):
-    prediction = models.CharField(max_length=255)
+    image = models.CharField(max_length=255)
+    prediction = models.IntegerField()
     confidence = models.FloatField()
     date = models.CharField(max_length=255, default="not_set")
     time = models.CharField(max_length=255, default='not_set')

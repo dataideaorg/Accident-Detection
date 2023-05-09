@@ -1,46 +1,60 @@
-{% extends 'accidentdetection/base.html'%}
-{% load static %}
-{% block content%}
+{% extends 'accidentdetection/base.html'%} {% load static %} {% block content%}
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-2 sidebar">
+    <div class="col-md-3 bg-light sidebar rounded p-3">
       <ul class="nav flex-column">
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'detector:dashbord'%}">Dashboard</a>
+          <a class="nav-link" href="{% url 'detector:dashbord'%}">
+            <i class="bi bi-speedometer2 me-3"></i> Dashboard
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'detector:process_video'%}">Select Video Feed</a>
+          <a class="nav-link active" href="{% url 'detector:process_video'%}">
+            <i class="bi bi-camera-video me-3"></i> Select Video Feed
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">View Images</a>
+          <a class="nav-link" href="{% url 'detector:view_images'%}">
+            <i class="bi bi-image me-3"></i> View Images
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Export Data</a>
+          <a class="nav-link" href="{% url 'detector:export_csv'%}">
+            <i class="bi bi-download me-3"></i> Export Data
+          </a>
         </li>
       </ul>
     </div>
-    <div class="col-md-10 main">
-      <h1 class="fw-bold text-center">Select Video</h1>  
+    <div class="col-md-9 main p-3">
+      <h1 class="fw-bold text-center">Select Video Feed</h1>
       <!-- HTML form using Bootstrap -->
-      <form 
-        method="post" 
-        enctype="multipart/form-data" 
+      <form
+        method="post"
+        enctype="multipart/form-data"
         action="{% url 'detector:process_video' %}"
         class="flex flex-column justify-content-center m-auto"
-        style="width: 60%;">
+        style="width: 60%"
+      >
         {% csrf_token %}
         <div class="form-group">
           <label for="video_url">Select a video URL to process:</label>
           <select class="form-control mb-3" id="video_url" name="video_url">
             <option value="">-- Select a video URL --</option>
-            <option value="https://example.com/video1.mp4">https://example.com/video1.mp4</option>
-            <option value="https://example.com/video2.mp4">https://example.com/video2.mp4</option>
-            <option value="https://example.com/video3.mp4">https://example.com/video3.mp4</option>
+            <option value="https://example.com/video1.mp4">
+              https://example.com/video1.mp4
+            </option>
+            <option value="https://example.com/video2.mp4">
+              https://example.com/video2.mp4
+            </option>
+            <option value="https://example.com/video3.mp4">
+              https://example.com/video3.mp4
+            </option>
           </select>
         </div>
-        <button type="submit" class="btn btn-primary text-center mb-3">Process Video</button>
+        <button type="submit" class="btn btn-primary text-center mb-3">
+          Process Video
+        </button>
       </form>
-      
     </div>
   </div>
 </div>

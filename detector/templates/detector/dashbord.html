@@ -1,29 +1,48 @@
-{% extends 'accidentdetection/base.html'%}
-{% load static %}
-{% block content %}
+{% extends 'accidentdetection/base.html'%} {% load static %} {% block content %}
+<style>
+  .images-card {
+    background: rgb(206, 252, 206);
+  }
+
+  .accidents-card {
+    background: rgb(250, 204, 204);
+  }
+
+  .confidence-card {
+    background: rgb(210, 243, 254);
+  }
+</style>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-2 sidebar">
+    <div class="col-md-3 bg-light sidebar rounded p-3">
       <ul class="nav flex-column">
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'detector:dashbord'%}">Dashboard</a>
+          <a class="nav-link active" href="{% url 'detector:dashbord'%}">
+            <i class="bi bi-speedometer2 me-3"></i> Dashboard
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'detector:process_video'%}">Select Video Feed</a>
+          <a class="nav-link" href="{% url 'detector:process_video'%}">
+            <i class="bi bi-camera-video me-3"></i> Select Video Feed
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">View Images</a>
+          <a class="nav-link" href="{% url 'detector:view_images'%}">
+            <i class="bi bi-image me-3"></i> View Images
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Export Data</a>
+          <a class="nav-link" href="{% url 'detector:export_csv'%}">
+            <i class="bi bi-download me-3"></i> Export Data
+          </a>
         </li>
       </ul>
     </div>
-    <div class="col-md-10 main">
-      <h2>Dashboard</h2>
+    <div class="col-md-9 main p-3">
+      <h2 class="fw-bold">Dashboard</h2>
       <div class="row">
         <div class="col-md-4">
-          <div class="card">
+          <div class="card m-1 shadow images-card">
             <div class="card-body">
               <h4 class="card-title">Images Processed</h4>
               <p class="card-text">{{ num_images_processed }}</p>
@@ -31,7 +50,7 @@
           </div>
         </div>
         <div class="col-md-4">
-          <div class="card">
+          <div class="card m-1 shadow accidents-card">
             <div class="card-body">
               <h4 class="card-title">Accidents Detected</h4>
               <p class="card-text">{{ num_accidents_detected }}</p>
@@ -39,15 +58,15 @@
           </div>
         </div>
         <div class="col-md-4">
-          <div class="card">
+          <div class="card m-1 shadow confidence-card">
             <div class="card-body">
-              <h4 class="card-title">Prediction Accuracy</h4>
-              <p class="card-text">{{ prediction_accuracy }}%</p>
+              <h4 class="card-title">Prediction Confidence</h4>
+              <p class="card-text">{{ prediction_confidence }}%</p>
             </div>
           </div>
         </div>
       </div>
-      <br>
+      <br />
       <div class="row">
         <div class="col-md-12">
           <div class="card">
@@ -62,6 +81,7 @@
                       <th>Location</th>
                       <th>Prediction</th>
                       <th>Confidence</th>
+                      <th>Image</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -72,6 +92,12 @@
                       <td>{{ prediction.location }}</td>
                       <td>{{ prediction.prediction }}</td>
                       <td>{{ prediction.confidence }}</td>
+                      <td>
+                        <a
+                          href="{% url 'detector:view_single' id=prediction.id %}"
+                          >{{ prediction.image }}</a
+                        >
+                      </td>
                     </tr>
                     {% empty %}
                     <tr>
