@@ -1,16 +1,13 @@
-import os
-import cv2
-from django.http import HttpResponse
-import pathlib
+import os, cv2, csv, pathlib
 from datetime import datetime
-import accidentdetection.settings as settings
 from .models import Prediction
+from django.http import HttpResponse
 from shafaratoolkit.props import colored
+import accidentdetection.settings as settings
 from django.shortcuts import render, redirect
-from .tools import request_prediction, get_prediction, get_user_location
+from accounts.models import User, Notification
+from .tools import request_prediction, get_user_location
 from django.contrib.auth.decorators import login_required
-import csv
-
 
 
 # Create your views here.
@@ -19,6 +16,32 @@ BASE_DIR = pathlib.Path(__file__).resolve().parent.parent
 model_api = "http://127.0.0.1:8081/classifier/"
 video_name = 'compilation.mp4'
 video_url = os.path.join(settings.STATIC_ROOT, 'videos', video_name)
+
+def save_prediction(request, response, location, date_time, frame_count):
+   prediction_object = Prediction(
+      prediction = response['prediction'],
+      confidence = str(round(response['confidence'], 2)),
+      location = location,
+      time = date_time.time().strftime("%H:%M:%S"),
+      date = date_time.date().strftime("%Y-%m-%d"),
+      image = f'frame_{frame_count}.jpg'
+   )
+
+   prediction_object.save()
+
+   return prediction_object
+
+def add_notification(request, response, location, date_time):
+   current_user = request.user 
+   notification = Notification(title='Accident detected!', 
+                               message=
+                               f'An accident was detected in {location}'+
+                               f' on {date_time.date().strftime("%Y-%m-%d")}'+
+                               f' at {date_time.time().strftime("%H:%M:%S")}.'+ 
+                               f' Please checkout for confirmation.')
+   notification.save()
+   return notification
+   
 
 # @login_required(login_url='/accounts/login')
 def process_video(request):
@@ -32,13 +55,15 @@ def process_video(request):
       
       if not os.path.exists(prediction_dir):
          os.makedirs(prediction_dir)
-      
+
       try:
-          location = get_user_location(request)
+         location = get_user_location(request)
       except Exception as e:
-          print(colored(255, 0, 0, f'Failed getting user location {str(e)}'))
-          print(colored(0, 0, 255, f'Setting to default location'))
-          location = 'Makerere,Kikoni, Kampala (U)'
+            print(colored(255, 0, 0, f'Failed getting user location {str(e)}'))
+            print(colored(0, 0, 255, f'Setting to default location'))
+            location = 'Makerere,Kikoni, Kampala (U)'
+
+      date_time = datetime.now()
 
       video = cv2.VideoCapture(video_path)
 
@@ -56,19 +81,15 @@ def process_video(request):
 
             response = request_prediction(output_path, model_api)
 
-            print(colored(0, 0, 255, f'Prediction: {response}'))
+            if response == None:
+               context = {
+                  'error_message' : 'Can not get response from the model at this time',
+                  'status': 500
+               }
 
-            date_time = datetime.now()
-            prediction_object = Prediction(
-              prediction = response['prediction'],
-              confidence = str(round(response['confidence'], 2)),
-              location = location,
-              time = date_time.time().strftime("%H:%M:%S"),
-              date = date_time.date().strftime("%Y-%m-%d"),
-              image = f'frame_{frame_count}.jpg'
-            )
+               return render(request, 'detector/error_page.html', context = context)
 
-            prediction_object.save()
+            save_prediction(request, response, date_time, frame_count)
 
           frame_count += 1
 
@@ -77,7 +98,9 @@ def process_video(request):
       return redirect('/detector/dashbord')
 
     if request.method == 'GET':
-      context = {}
+      user = request.user
+      notifications = user.notifications.all()
+      context = {'notifications': notifications}
 
       return render(request, 'detector/select_video.html', context)
 

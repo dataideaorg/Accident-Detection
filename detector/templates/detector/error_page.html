@@ -1,0 +1,47 @@
+{% extends 'accidentdetection/base.html'%} {% load static %} {% block content%}
+
+<style>
+    .error{
+        background: rgb(247, 203, 203);
+        color: rgb(191, 39, 39);
+        border: 1px solid rgb(191, 39, 39);
+    }
+    
+</style>
+<div class="container-fluid">
+  <div class="row p-3">
+    <div class="col-md-3 bg-light sidebar rounded p-3">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'detector:dashbord'%}">
+            <i class="bi bi-speedometer2 me-3"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'detector:process_video'%}">
+            <i class="bi bi-camera-video me-3"></i> Select Video Feed
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'detector:view_images'%}">
+            <i class="bi bi-image me-3"></i> View Images
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'detector:export_csv'%}">
+            <i class="bi bi-download me-3"></i> Export Data
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-9 main p-3">
+      <h1 class="fw-bold text-center">An Error Occurred</h1>
+      <div class="m-auto rounded p-5 error">
+          <p><span class="fw-bold">Code: </span>{{status}}</p>
+        <p><span class="fw-bold">Message: </span>{{error_message}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
