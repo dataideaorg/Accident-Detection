@@ -113,14 +113,14 @@
             class="px-5 collapse navbar-collapse d-lg-flex"
             id="navbarsExample11"
           >
-            <a class="navbar-brand col-lg-3 me-0" href="/"
+            <a class="navbar-brand col-lg-3 me-0" href="/home"
               ><h2 class="fw-bold">
-                Accident<span class="text-primary">Detection</span>
+                AccidentDetection<span class="text-primary">Ai</span>
               </h2></a
             >
             <ul class="navbar-nav col-lg-6 justify-content-lg-center">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/">Home</a>
+                <a class="nav-link" aria-current="page" href="/home">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'detector:process_video'%}"
@@ -128,13 +128,7 @@
                 >
               </li>
               <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="/about"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                  >About</a
-                >
+                <a class="nav-link" href="/about">About</a>
               </li>
             </ul>
             {% if user.is_authenticated %}
@@ -174,13 +168,10 @@
             <h5>Company</h5>
             <ul class="nav flex-column">
               <li class="nav-item mb-2">
-                <a href="about" class="nav-link p-0 text-muted">About Us</a>
+                <a href="/about" class="nav-link p-0 text-muted">About Us</a>
               </li>
               <li class="nav-item mb-2">
-                <a href="careers" class="nav-link p-0 text-muted">Careers</a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="/pricing" class="nav-link p-0 text-muted">Pricing</a>
+                <a href="#" class="nav-link p-0 text-muted">Careers</a>
               </li>
               <li class="nav-item mb-2">
                 <a href="#" class="nav-link p-0 text-muted">FAQs</a>
@@ -192,14 +183,10 @@
             <h5>Resources</h5>
             <ul class="nav flex-column">
               <li class="nav-item mb-2">
-                <a href="/videos" class="nav-link p-0 text-muted">Video</a>
+                <a href="#" class="nav-link p-0 text-muted">Video</a>
               </li>
               <li class="nav-item mb-2">
-                <a
-                  href="https://deepconclusions.com/blogs"
-                  class="nav-link p-0 text-muted"
-                  >Blogs</a
-                >
+                <a href="#" class="nav-link p-0 text-muted">Blogs</a>
               </li>
               <!-- <li class="nav-item mb-2">
                 <a href="#" class="nav-link p-0 text-muted">Community</a>
@@ -214,19 +201,15 @@
             <h5>Product</h5>
             <ul class="nav flex-column">
               <li class="nav-item mb-2">
-                <a href="/product#cropcare" class="nav-link p-0 text-muted"
-                  >Crop Care</a
+                <a href="#" class="nav-link p-0 text-muted"
+                  >AccidentDetectonAi</a
                 >
               </li>
               <li class="nav-item mb-2">
-                <a href="/product#benefits" class="nav-link p-0 text-muted"
-                  >Benefits</a
-                >
+                <a href="#" class="nav-link p-0 text-muted">Benefits</a>
               </li>
               <li class="nav-item mb-2">
-                <a href="/product#whyai" class="nav-link p-0 text-muted"
-                  >Why Ai</a
-                >
+                <a href="#" class="nav-link p-0 text-muted">Why Ai</a>
               </li>
             </ul>
           </div>
@@ -254,7 +237,7 @@
         <div
           class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top"
         >
-          <p>&copy; 2023 Deep Conclusions. All rights reserved.</p>
+          <p>&copy; 2023 AccidentDetectionAi. All rights reserved.</p>
           <ul class="list-unstyled d-flex">
             <li class="ms-3">
               <a class="link-dark" href="#"

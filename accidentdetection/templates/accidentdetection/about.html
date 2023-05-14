@@ -1,8 +1,33 @@
-{% extends 'accidentdetection/base.html'%}
-{% load static %}
-{% block title %} 
-About
-{% endblock title%}
-{% block content %}
-<h1>About</h1>
+{% extends 'accidentdetection/base.html'%} {% load static %} {% block title %}
+About {% endblock title%} {% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6">
+      <h1 class="fw-bold">About Accident Detection System</h1>
+      <p>
+        Accident Detection System is an application that uses computer vision
+        and machine learning techniques to detect and classify road accidents in
+        real time. The system can process live video feeds from cameras
+        installed in different locations on the road network, and can detect
+        various types of accidents, including collisions, rollovers, and other
+        types of incidents.
+      </p>
+      <p>
+        The system uses deep learning algorithms to analyze video frames in real
+        time, and can automatically generate alerts and notifications to
+        emergency services, such as police, ambulance, and fire departments. The
+        system can also provide real-time updates to traffic management centers
+        and other stakeholders, helping them to quickly respond to accidents and
+        minimize the impact on traffic flow and safety.
+      </p>
+    </div>
+    <div class="col-md-6">
+      <img
+        src="https://via.placeholder.com/500x400"
+        class="img-fluid rounded"
+        alt="Accident Detection System"
+      />
+    </div>
+  </div>
+</div>
 {% endblock content%}

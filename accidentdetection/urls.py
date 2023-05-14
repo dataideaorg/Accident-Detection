@@ -8,7 +8,8 @@ from .views import home, about, contact
 app_name = "accidentdetection"
 
 urlpatterns = [
-    path('', home, name='home'),
+    path('', include('detector.urls')),
+    path('home', home, name='home'),
     path('about/', about, name='about'),
     path('contact/', contact, name='contact'),
     path('admin/', admin.site.urls),

@@ -3,6 +3,7 @@ from .views import dashbord, process_video,  view_single, view_images,  export_c
 
 app_name = 'detector'
 urlpatterns = [
+    path('', dashbord),
     path('process_video', process_video, name='process_video'),
     path('view_images', view_images, name='view_images'),
     path('dashbord', dashbord, name='dashbord'),

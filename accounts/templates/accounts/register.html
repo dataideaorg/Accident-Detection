@@ -1,10 +1,29 @@
-{% extends 'accidentdetection/base.html'%}
-{% load static %}
-{% block content%}
-<h2>Register</h2>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Register</button>
+{% extends 'accidentdetection/base.html'%} {% load static %} {% block content%}
+<style>
+  input[type="text"],
+  input[type="password"] {
+    /* width: 100%; */
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  .registration-form-container {
+    width: 70%;
+    margin: auto;
+  }
+  form span {
+    display: block;
+  }
+</style>
+<div class="registration-form-container p-2">
+  <h2>Welcome, Register</h2>
+  <form method="post" enctype="multipart/form-data" class="border rounded p-3">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Register</button>
   </form>
+</div>
 {% endblock %}
