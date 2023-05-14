@@ -13,6 +13,7 @@ opencv-python = "^4.7.0.72"
 pafy = "^0.5.5"
 tensorflow-hub = "^0.13.0"
 pillow = "^9.5.0"
+django-rest-framework = "^0.1.0"
 
 
 [build-system]

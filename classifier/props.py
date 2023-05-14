@@ -2,6 +2,9 @@ import tensorflow as tf
 import PIL
 import cv2
 import tensorflow_hub as hub
+from tensorflow.python.ops.numpy_ops import np_config
+np_config.enable_numpy_behavior()
+
 
  
 def colored(r, g, b, text):
@@ -29,6 +32,6 @@ class Model:
         return tf.argmax(predictions, axis=1)
     
     def confidence(self, predictions):
-        probabilities = tf.nn.softmax(predictions)
+        probabilities = tf.nn.softmax(predictions).numpy()
         confidence = tf.reduce_max(probabilities) * 100
         return confidence

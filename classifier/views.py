@@ -2,6 +2,7 @@ import pathlib
 from django.shortcuts import render
 from .props import Model, colored
 
+
 # django rest framework
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -32,6 +33,8 @@ def classify(request):
                 'prediction': int(prediction),
                 'confidence': round(confidence, 3),
             })
+
+            print(colored(0, 0, 255,f'{str(serializer.data)}'))
             return Response(serializer.data)
         except Exception as e:
             print(colored(255, 0, 0, f'An error occured during classification {str(e)}'))
