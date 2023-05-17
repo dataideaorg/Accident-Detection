@@ -14,8 +14,8 @@ from django.contrib.auth.decorators import login_required
 BASE_DIR = pathlib.Path(__file__).resolve().parent.parent
 
 model_api = "http://127.0.0.1:8081/classifier/"
-video_name = 'compilation.mp4'
-video_url = os.path.join(settings.STATIC_ROOT, 'videos', video_name)
+# video_name = 'compilation.mp4'
+# video_url = os.path.join(settings.STATIC_ROOT, 'videos', video_name)
 
 def save_prediction(response, location, date_time, frame_count):
    prediction_object = Prediction(
@@ -36,7 +36,7 @@ def process_video(request):
     if request.method == 'POST':
       video_url = request.POST.get('video_url')
       print(colored(0, 0, 256, f'{video_url  }'))
-      video_path = os.path.join(settings.STATIC_ROOT,'videos', 'compilation.mp4')
+      video_path = os.path.join(settings.STATIC_ROOT,'videos', video_url)
       output_dir = os.path.join(settings.MEDIA_ROOT, 'images', 'frames')
       prediction_dir = os.path.join(settings.MEDIA_ROOT, 'images', 'predictions')
 

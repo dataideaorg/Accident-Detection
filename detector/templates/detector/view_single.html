@@ -2,7 +2,7 @@
 {% load static %}
 {% block content%}
 <div class="container-fluid">
-    <div class="row p-3s">
+    <div class="row p-3">
     <div class="col-md-3 bg-light sidebar rounded p-3">
         <ul class="nav flex-column">
           <li class="nav-item">
@@ -28,7 +28,13 @@
         </ul>
       </div>
     <div class="col-md-9 main">
-        <div>
+        <div class="">
+            <div class="d-flex details p-3">
+              <p class="">Prediction: {{prediction.prediction}}</p>
+              <p class="px-2">Confidence: {{prediction.confidence}}%</p>
+              <p class="px-2">Location: {{prediction.location}}</p>
+              <p class="">Time: {{prediction.time}}</p>
+            </div>
             <img 
                 src="/media/images/frames/{{ prediction.image }}" 
                 alt="{{ prediction.image }}" 
