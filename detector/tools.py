@@ -51,7 +51,7 @@ def send_message(messaging_api, confidence, location, date_time):
             {
                 'numbers': ['256709603955', '256701520768'],
                 'senderid': 'AccidentAi',
-                'messageBody': f'An accident has been detected in {location} on {date} at {time} with a confidence of {confidence}'
+                'messageBody': f'An accident has been detected in {location} on {date} at {time} with a confidence of {confidence}%'
             }
         ]
     }
