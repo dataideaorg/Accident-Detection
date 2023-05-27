@@ -1,14 +1,10 @@
-import os
-import cv2
-import csv
-import pathlib
+import os, cv2, csv, pathlib
 from datetime import datetime
 from .models import Prediction
 from django.http import HttpResponse
 from shafaratoolkit.props import colored
 import accidentdetection.settings as settings
 from django.shortcuts import render, redirect
-from accounts.models import User, Notification
 from django.contrib.auth.decorators import login_required
 from .tools import request_prediction, get_user_location, send_message
 
@@ -18,8 +14,6 @@ BASE_DIR = pathlib.Path(__file__).resolve().parent.parent
 
 model_api = "http://127.0.0.1:8081/classifier/"
 messaging_api = 'https://geniussmsgroup.com/api/json/messages1/jsonMessagesService'
-# video_name = 'compilation.mp4'
-# video_url = os.path.join(settings.STATIC_ROOT, 'videos', video_name)
 
 
 def save_prediction(response, location, date_time, frame_count):
@@ -91,6 +85,7 @@ def process_video(request):
                 if response['prediction'] == 1:
                     send_message(
                         messaging_api=messaging_api,
+                        numbers=['256709603955', '256701520768', '256708563752'],
                         confidence=response['confidence'],
                         location=location,
                         date_time=date_time

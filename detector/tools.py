@@ -35,7 +35,7 @@ def request_prediction(image, url):
         return None
 
 
-def send_message(messaging_api, confidence, location, date_time):
+def send_message(messaging_api, numbers, confidence, location, date_time):
     confidence = str(round(confidence, 2))
     location = location
     time = date_time.time().strftime("%H:%M:%S")
@@ -49,7 +49,7 @@ def send_message(messaging_api, confidence, location, date_time):
         },
         'messages': [
             {
-                'numbers': ['256709603955', '256701520768'],
+                'numbers': numbers,
                 'senderid': 'AccidentAi',
                 'messageBody': f'An accident has been detected in {location} on {date} at {time} with a confidence of {confidence}%'
             }
@@ -59,10 +59,8 @@ def send_message(messaging_api, confidence, location, date_time):
     try:
         response = requests.post(url=messaging_api, json=payload)
         response = response.json()
-        print(
-            colored(0, 255, 0, text=f'Messages sent successfully \n {response}'))
+        print(colored(0, 255, 0, text=f'Messages sent successfully \n {response}'))
+        return response
     except Exception as e:
-        print(
-            colored(255, 0, 0, text=f'An error occurred while sending messages \n {e}'))
-
-    return
+        print(colored(255, 0, 0, text=f'An error occurred while sending messages \n {e}'))
+        return f'{e}' 
