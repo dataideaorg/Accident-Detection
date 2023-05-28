@@ -16,7 +16,8 @@ def get_user_location(request):
     geolocator = Nominatim(user_agent='myapp')
     location = geolocator.geocode(ip)
     if location:
-        return location.address
+        print(f'Location: {location}')
+        return location
     else:
         return None
 
@@ -63,4 +64,4 @@ def send_message(messaging_api, numbers, confidence, location, date_time):
         return response
     except Exception as e:
         print(colored(255, 0, 0, text=f'An error occurred while sending messages \n {e}'))
-        return f'{e}' 
+        return None 

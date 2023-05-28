@@ -51,7 +51,7 @@ def process_video(request):
         try:
             location = get_user_location(request)
         except Exception as e:
-            print(colored(255, 0, 0, f'Failed getting user location {str(e)}'))
+            print(colored(0, 0, 255, f'Failed getting user location {str(e)}'))
             print(colored(0, 0, 255, f'Setting to default location'))
             location = 'Makerere,Kikoni, Kampala (U)'
 
